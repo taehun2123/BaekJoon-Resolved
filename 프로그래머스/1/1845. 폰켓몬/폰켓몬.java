@@ -8,10 +8,6 @@ class Solution {
             set.add(nums[i]);
         }
         
-        if(set.size() > pickRange){
-            return pickRange;
-        } else {
-            return set.size(); 
-        }
+        return set.size() > pickRange ? pickRange : set.size();
     }
 }
