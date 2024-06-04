@@ -20,7 +20,7 @@ int main() {
         arr.push_back(in);
     }
 
-    cout << (int)floor((sum/n) + 0.5) << "\n"; // 산술 평균
+    cout << (int)round((sum/n)) << "\n"; // 산술 평균
     sort(arr.begin(), arr.end());
     cout << arr.at(n/2) << "\n"; // 중앙값;
     vector<pair<int,int>> st;
