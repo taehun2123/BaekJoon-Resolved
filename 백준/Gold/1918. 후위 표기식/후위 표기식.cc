@@ -32,7 +32,7 @@ int main() {
             if (!listing.empty() && listing.top().first == 0) {
                 listing.pop();
             }
-        } else if(isdigit(ch) || isalpha(ch)) {
+        } else if(isalpha(ch)) {
             cout << ch;
         }
     }
