@@ -25,15 +25,11 @@ int main() {
             Q.push(cur * 2);
         }
 
-        // -1 및 +1의 경우를 처리하여 큐의 뒤에 넣는다.
-        if (cur - 1 >= 0 && vis[cur - 1] == -1) {
-            vis[cur - 1] = vis[cur] + 1;
-            Q.push(cur - 1);
-        }
-
-        if (cur + 1 <= 100000 && vis[cur + 1] == -1) {
-            vis[cur + 1] = vis[cur] + 1;
-            Q.push(cur + 1);
+        for(int dot : {cur-1, cur+1}){
+            if(dot < 0 || dot > 100000) continue;
+            if(vis[dot] != -1) continue;
+            vis[dot] = vis[cur] + 1;
+            Q.push(dot);
         }
     }
     return 0;
