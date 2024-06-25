@@ -1,4 +1,3 @@
-// http://boj.kr/4e7fe4509a3842598592fe4ed79900c0
 #include <bits/stdc++.h>
 using namespace std;
 bool isused1[40]; // column을 차지하고 있는지
