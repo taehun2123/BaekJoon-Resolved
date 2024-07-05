@@ -8,35 +8,27 @@ int board[51][51];
 vector<pair<int, int>> houses;
 vector<pair<int, int>> chickenStores;
 
-int distanceTable[100][13]; // 최대 100개의 집과 13개의 치킨집
-
-void precomputeDistances() {
-    for (int i = 0; i < houses.size(); ++i) {
-        for (int j = 0; j < chickenStores.size(); ++j) {
-            distanceTable[i][j] = abs(houses[i].X - chickenStores[j].X) + abs(houses[i].Y - chickenStores[j].Y);
-        }
-    }
-}
-
-int calculateDistance(vector<int>& selected) {
+int calculateDistance(vector<pair<int, int>>& selected) {
     int totalDistance = 0;
-    for (int i = 0; i < houses.size(); ++i) {
+    
+    for (auto house : houses) {
         int minDistance = INT_MAX;
-        for (int idx : selected) {
-            minDistance = min(minDistance, distanceTable[i][idx]);
+        for (auto store : selected) {
+            int distance = abs(house.X - store.X) + abs(house.Y - store.Y);
+            minDistance = min(minDistance, distance);
         }
         totalDistance += minDistance;
     }
     return totalDistance;
 }
 
-void selectChicken(int start, vector<int>& selected) {
+void selectChicken(int start, vector<pair<int, int>>& selected) {
     if (selected.size() == m) {
         mn = min(mn, calculateDistance(selected));
         return;
     }
     for (int i = start; i < chickenStores.size(); ++i) {
-        selected.push_back(i);
+        selected.push_back(chickenStores[i]);
         selectChicken(i + 1, selected);
         selected.pop_back();
     }
@@ -59,9 +51,7 @@ int main() {
         }
     }
 
-    precomputeDistances();
-
-    vector<int> selected;
+    vector<pair<int, int>> selected;
     selectChicken(0, selected);
     
     cout << mn;
