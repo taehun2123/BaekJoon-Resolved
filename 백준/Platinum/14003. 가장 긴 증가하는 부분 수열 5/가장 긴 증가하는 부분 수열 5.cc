@@ -1,8 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
-vector<int> v1, v2;
+vector<int> v1;
+vector<int> lis, lis_idx, ans; // lis: stores LIS elements, lis_idx: indexes in v1, ans: stores the actual LIS
 int n;
-int idx[1002];
 
 int main() {
     ios::sync_with_stdio(0);
@@ -15,38 +15,35 @@ int main() {
         v1.push_back(t);
     }
 
-    vector<int> lis, lis_idx, parent(n, -1); // lis에서 각 숫자가 위치한 v1의 인덱스를 저장
+    lis.push_back(v1[0]);
+    lis_idx.push_back(0);
 
-    for (int i = 0; i < n; ++i) {
-        int pos = lower_bound(lis.begin(), lis.end(), v1[i]) - lis.begin();
+    for (int i = 1; i < n; i++) {
+        int cur = v1[i];
 
-        if (pos < lis.size()) {
-            lis[pos] = v1[i];
-        } else {
-            lis.push_back(v1[i]);
+        if(lis.back() < cur){
+            lis_idx.push_back(lis.size());
+            lis.push_back(cur);
         }
-
-        if (pos > 0) {
-            parent[i] = lis_idx[pos - 1];
-        }
-        if (pos < lis_idx.size()) {
-            lis_idx[pos] = i;
-        } else {
-            lis_idx.push_back(i);
+        else {
+            auto iter = lower_bound(lis.begin(), lis.end(), cur);
+            *iter = cur;
+            lis_idx.push_back(iter - lis.begin());
         }
     }
 
     cout << lis.size() << "\n";
 
-    // LIS 역추적
-    vector<int> fLis;
-    for (int i = lis_idx.back(); i != -1; i = parent[i]) {
-        fLis.push_back(v1[i]);
+    int cur = lis.size() - 1;
+    for(int i = lis_idx.size() - 1; i >= 0; i--){
+        if(cur == lis_idx[i]) {
+            ans.push_back(v1[i]);
+            cur--;
+        }
     }
-    reverse(fLis.begin(), fLis.end());
 
-    for (auto &val : fLis) {
-        cout << val << " ";
+    for (int i = ans.size() - 1; i >= 0; i--) {
+        cout << ans[i] << " ";
     }
 
     return 0;
