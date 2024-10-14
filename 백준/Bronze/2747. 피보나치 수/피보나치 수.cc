@@ -1,25 +1,14 @@
-#include <iostream>
+#include <bits/stdc++.h>
 using namespace std;
-
-int fibo(int x) {
-    int f = 0;
-    int a = 0;
-    int b = 1;
-    if(x == 1) return 1;
-    for(int i = 1; i<x; i++){
-        f = a+b;
-        a = b;
-        b = f;
-    }
-    return f;
-}
-
+int dp[46];
 int main() {
     ios::sync_with_stdio(0);
     cin.tie(0);
-
-    int x;
-    cin >> x;
-    cout << fibo(x);
+    dp[0] = 0;
+    dp[1] = 1;
+    for(int i = 2; i<=45; i++) dp[i] = dp[i-1] + dp[i-2];
+    int n;
+    cin >> n;
+    cout << dp[n];
     return 0;
 }
