@@ -1,24 +1,25 @@
 #include <bits/stdc++.h>
 using namespace std;
-int n, k;
-int vis[100002];
+int board[100002];
+int N, K;
 int main() {
     ios::sync_with_stdio(0);
     cin.tie(0);
-    cin >> n >> k;
-    fill(vis, vis+100001, -1);
+    cin >> N >> K;
+    fill(board, board + 100002, -1);
+    board[N] = 0;
     queue<int> Q;
-    vis[n] = 0;
-    Q.push(n);
-    while(vis[k] == -1){
+    Q.push(N);
+    while(board[K] == -1){
         int cur = Q.front(); Q.pop();
-        for(int dot : {cur-1, cur+1, cur*2}){
-            if(dot < 0 || dot > 100000) continue;
-            if(vis[dot] != -1) continue;
-            vis[dot] = vis[cur] + 1;
-            Q.push(dot);
+        for(auto nx : {cur-1, cur+1, 2*cur}) {
+            if(nx < 0 || nx > 100000 || board[nx] != -1) continue;
+            board[nx] = board[cur] + 1;
+            Q.push(nx);
+            if(nx == K) break;
         }
     }
-    cout << vis[k];
+    cout << board[K];
+
     return 0;
 }
