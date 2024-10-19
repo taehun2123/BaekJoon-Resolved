@@ -1,23 +1,20 @@
 #include <bits/stdc++.h>
 #define pii pair<int,int>
-#define X first
-#define Y second
 using namespace std;
-pii st[100002];
+pii li[100002];
 int ans, t;
 int main() {
     ios::sync_with_stdio(0);
-    cin.tie(0); cout.tie(0);
+    cin.tie(0);
     int n;
     cin >> n;
+    for(int i = 0; i<n; i++) cin >> li[i].second >> li[i].first; // second : 회의가 시작되는 시간, first : 끝나는 시간
+    sort(li, li+n);
     for(int i = 0; i<n; i++){
-        cin >> st[i].Y >> st[i].X;
-    }
-    sort(st, st+n); //끝나는 시간이 빠른 순 - 같다면, 시작하는 시간이 빠른 순으로 정렬
-    for(int i = 0; i<n; i++){
-        if(t > st[i].Y) continue; //이전 타임의 끝나는 시간이 현재의 시작하는 시간보다 더 크면 continue
+        //t = 이전의 회의가 끝나는 시간
+        if(t > li[i].second) continue;
         ans++;
-        t = st[i].X;
+        t = li[i].first; //회의가 끝나는 시간을 t로 재설정
     }
 
     cout << ans;
