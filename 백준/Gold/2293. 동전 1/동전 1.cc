@@ -1,21 +1,17 @@
 #include <bits/stdc++.h>
 using namespace std;
 int n, k;
-int v[102];
-int dp[10002];
+int val[102]; //동전의 가치
+int dp[10002]; // 가치의 합이 k일 때의 경우의 수
 int main() {
     ios::sync_with_stdio(0);
     cin.tie(0);
     cin >> n >> k;
-    for(int i = 1; i<=n; i++) cin >> v[i];
-    dp[0] = 1;
-    for(int i = 1; i<=n; i++){
-        for(int j = v[i]; j<=k; j++){
-            //가지고 있는 동전의 가장 작은 부분 부터 시작하여
-            //목표 동전 가치인 k까지의 모든 경우의 수를 구한다.
-            dp[j] += dp[j-v[i]];
-        }
-    }
+    dp[0] = 1; // 가치의 합이 0이면 동전 0개를 사용한 경우의 수는 1임
+    for(int i = 1; i<=n; i++) cin >> val[i];
+    for(int i = 1; i<=n; i++)
+        for(int j = val[i]; j<=k; j++)
+            dp[j] += dp[j-val[i]];
 
     cout << dp[k];
     return 0;
