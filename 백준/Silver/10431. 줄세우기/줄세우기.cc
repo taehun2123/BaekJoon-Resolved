@@ -13,20 +13,20 @@ int main() {
 
         cin >> tmp;
         arr.push_back(tmp); // 먼저 하나 세운다
-        
+
         for(int i=1; i<=19; i++){
             cin >> tmp;
-            int min_tmp = -1;
-            for(int j = (int)arr.size()-1; j>=0; j--){
+            int taller_idx = -1;
+            for(int j = i-1; j>=0; j--){
                 if(arr[j] > tmp){
-                    min_tmp = j;
+                    taller_idx = j;
                 }
             }
 
-            if(min_tmp == -1) arr.push_back(tmp);
+            if(taller_idx == -1) arr.push_back(tmp);
             else {
-                ans += arr.size() - min_tmp;
-                arr.insert(arr.begin() + min_tmp, tmp);
+                ans += i - taller_idx;
+                arr.insert(arr.begin() + taller_idx, tmp);
             }
         }
         cout << n << " " << ans << "\n";
